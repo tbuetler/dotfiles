@@ -1,0 +1,149 @@
+{
+    // Waybar Konfiguration (siehe: man 5 waybar)
+    "position": "bottom",
+    "height": 38,
+    "spacing": 4,
+    "modules-left": [
+        "sway/workspaces",
+        "sway/mode"
+    ],
+    "modules-center": [],
+    "modules-right": [
+        "network",
+        "custom/bluetooth",
+        "pulseaudio",
+        "battery",
+        "backlight",
+        "custom/temperature",
+        "cpu",
+        "memory",
+        "disk",
+        "disk#home",
+        "clock",
+        "tray",
+        "custom/notification"
+        // "custom/onedrive-sync"
+    ],
+    "sway/workspaces": {
+        "disable-scroll": true,
+        "format": "{name}"
+    },
+    "sway/mode": {
+        "format": "<span style=\"italic\">{}</span>"
+    },
+    "custom/bluetooth": {
+        "interval": 5,
+        "exec": "~/.config/waybar/scripts/bluetooth.sh status",
+        "tooltip": true,
+        "tooltip-format": "{output}",
+        "exec-tooltip": "~/.config/waybar/scripts/bluetooth.sh tooltip",
+        "on-click": "~/.config/waybar/scripts/bluetooth.sh connect",
+        "on-click-right": "~/.config/waybar/scripts/bluetooth.sh toggle"
+    },
+    "network": {
+        "interval": 2,
+        "format-wifi": " {essid} ({signalStrength}%) ↓{bandwidthDownBits} ↑{bandwidthUpBits}",
+        "format-ethernet": " {ipaddr}/{cidr}",
+        "tooltip-format": "{ifname} via {gwaddr}\nSpeed: ↓{bandwidthDownBits} ↑{bandwidthUpBits}",
+        "format-linked": " {ifname} (No IP)",
+        "format-disconnected": "⚠ Disconnected",
+        "format-alt": "{ifname}: {ipaddr}/{cidr}"
+    },
+    "pulseaudio": {
+        "scroll-step": 1,
+        "format": "{icon} {volume}% {format_source}",
+        "format-bluetooth": "{icon} {volume}% {format_source}",
+        "format-bluetooth-muted": " {icon} {format_source}",
+        "format-muted": " {format_source}",
+        "format-source": " {volume}%",
+        "format-source-muted": "",
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", "", ""]
+        },
+        "on-click": "pavucontrol"
+    },
+    "battery": {
+        "states": {
+            "warning": 20,
+            "critical": 10
+        },
+        "interval": 10,
+        "exec-if": "~/.config/waybar/scripts/battery_hibernate.sh",
+        "format": "{icon} {capacity}%",
+        "format-charging": " {capacity}%",
+        "format-plugged": " {capacity}%",
+        "format-full": " {capacity}%",
+        "format-discharging": "{icon} {capacity}% ({time})",
+        "format-icons": ["", "", "", "", ""]
+    },
+    "backlight": {
+        "format": "{icon} {percent}%",
+        "format-icons": ["🌑", "🌒", "🌓", "🌔", "🌕"]
+    },
+    "cpu": {
+        "states": {
+            "warning": 70,
+            "critical": 90
+        },
+        "format": " {usage:>2}%",
+        "interval": 3
+    },
+    "custom/temperature": {
+        "exec": "~/.config/waybar/scripts/temperature.sh",
+        "interval": 10,
+        "return-type": "json",
+        "format": "{}",
+        "tooltip": true
+    },
+    "memory": {
+        "states": {
+            "warning": 70,
+            "critical": 90
+        },
+        "format": " {percentage}%",
+        "interval": 3
+    },
+    "disk": {
+        "states": {
+            "warning": 80,
+            "critical": 90
+        },
+        "interval": 30,
+        "path": "/",
+        "format": "{path} {percentage_used}%"
+    },
+    "disk#home": {
+        "interval": 30,
+        "path": "/home",
+        "format": "{path} {percentage_used}%"
+    },
+    "clock": {
+        "format": "{:%a %d.%m %H:%M}",
+        "format-alt": "{:%A, %d.%m.%Y %H:%M:%S}",
+        "interval": 1,
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt>{calendar}</tt>"
+    },
+    "tray": {
+        "spacing": 10
+    },
+    "custom/notification": {
+        "interval": 5,
+        "exec": "~/.config/waybar/scripts/notification.sh",
+        "format": "{}",
+        "on-click": "dunstctl close-all",
+        "on-click-right": "dunstctl history-pop",
+        "tooltip": false
+    },
+    "custom/proton-sync": {
+    	"exec": "~/.config/waybar/scripts/onedrive-sync.sh",
+	"interval": 300,
+	"tooltip": true,
+	"format": "☁️ Sync: {}"
+    }
+}
